@@ -1,6 +1,11 @@
 import tkinter as tk
 from tkinter import HORIZONTAL, VERTICAL, ttk, messagebox
-from contratado_dao import  Contratado, borrar_tabla, crear_tabla, editar, eliminar, guadar, listar
+from contratado_dao import  Contratado, crear_tabla, editar, eliminar, guadar, listar
+from time import   strftime
+import pandas as pd
+
+
+
 
 def barra_menu(root):
     barra_menu = tk.Menu(root)
@@ -48,61 +53,63 @@ class Frame(tk.Frame):
         super().__init__(root, width=500, height=500)
         self.root= root
         self.pack()
-        self.config( bg='#EEE7BC')
+        self.config( bg='#DCDCDC')#cfd6b4
         self.id_contratado= None
 
         self.campos_contratos()
         self.deshabilitar_campos()
         self.tabla_contratado()
 
+        #self.contratados = Contratado()
+
     def campos_contratos(self):
         #nombre de cada campo
         self.label_nombre = tk.Label(self, text= 'Nombre: ')
-        self.label_nombre.config(font= ('Arial', 12, 'bold'))
+        self.label_nombre.config(font= ('Kaufmann BT',13,'bold'))
         self.label_nombre.grid(row= 0, column = 0, padx=3, pady=5)
 
         self.label_cuil = tk.Label(self, text= 'Cuil: ')
-        self.label_cuil.config(font= ('Arial', 12, 'bold'))
+        self.label_cuil.config(font= ('Kaufmann BT',13,'bold'))
         self.label_cuil.grid(row= 1, column = 0 , padx=3, pady=5)
 
         self.label_nacimiento = tk.Label(self, text= 'Fecha de Nacimiento: ')
-        self.label_nacimiento.config(font= ('Arial', 12, 'bold'))
+        self.label_nacimiento.config(font= ('Kaufmann BT',13,'bold'))
         self.label_nacimiento.grid(row= 2, column = 0 , padx=5, pady=5)
 
         self.label_monto = tk.Label(self, text= 'Monto Inicial: ')
-        self.label_monto.config(font= ('Arial', 12, 'bold'))
+        self.label_monto.config(font= ('Kaufmann BT',13,'bold'))
         self.label_monto.grid(row= 3, column = 0 , padx=5, pady=5)
 
         self.label_modificacion = tk.Label(self, text= 'Modificacion: ')
-        self.label_modificacion.config(font= ('Arial', 12, 'bold'))
+        self.label_modificacion.config(font= ('Kaufmann BT',13,'bold'))
         self.label_modificacion.grid(row= 4, column = 0 , padx=5, pady=5)
 
         self.label_duracion = tk.Label(self, text= 'Duración de la modificacion: ')
-        self.label_duracion.config(font= ('Arial', 12, 'bold'))
+        self.label_duracion.config(font= ('Kaufmann BT',13,'bold'))
         self.label_duracion.grid(row= 5, column = 0, padx=5, pady=5)
 
         self.label_area_de_trabajo = tk.Label(self, text= 'Área de Trabajo: ')
-        self.label_area_de_trabajo.config(font= ('Arial', 12, 'bold'))
+        self.label_area_de_trabajo.config(font= ('Kaufmann BT',13,'bold'))
         self.label_area_de_trabajo.grid(row= 6, column = 0 , padx=5, pady=5)
 
         self.label_funcion = tk.Label(self, text= 'Función: ')
-        self.label_funcion.config(font= ('Arial', 12, 'bold'))
+        self.label_funcion.config(font= ('Kaufmann BT',13,'bold'))
         self.label_funcion.grid(row= 7, column = 0 , padx=5, pady=5 )
 
         self.label_domicilio = tk.Label(self, text= 'Domicilio: ')
-        self.label_domicilio.config(font= ('Arial', 12, 'bold'))
+        self.label_domicilio.config(font= ('Kaufmann BT',13,'bold'))
         self.label_domicilio.grid(row= 8, column = 0, padx=5, pady=5)
 
         self.label_telefono = tk.Label(self, text= 'Teléfono: ')
-        self.label_telefono.config(font= ('Arial', 12, 'bold'))
+        self.label_telefono.config(font= ('Kaufmann BT',13,'bold'))
         self.label_telefono.grid(row= 9, column = 0, padx=4, pady=5)
 
         self.label_mail = tk.Label(self, text= 'Mail: ')
-        self.label_mail.config(font= ('Arial', 12, 'bold'))
+        self.label_mail.config(font= ('Kaufmann BT',13,'bold'))
         self.label_mail.grid(row= 10, column = 0, padx=5, pady=5)
 
         self.label_otros_trabajos = tk.Label(self, text= 'Otros Trabajos: ')
-        self.label_otros_trabajos.config(font= ('Arial', 12, 'bold'))
+        self.label_otros_trabajos.config(font= ('Kaufmann BT',13,'bold'))
         self.label_otros_trabajos.grid(row= 11, column = 0, padx=5, pady=5)
 
 
@@ -170,21 +177,22 @@ class Frame(tk.Frame):
 
 
       #Botones
-        self.boton_nuevo= tk.Button(self, text= "Nuevo", command= self.habilitar_campos)
-        self.boton_nuevo.config(width=20, font= ('Arial', 12, 'bold'), fg= '#FFFFFF', bg='#2EF11E', cursor='hand2', activebackground= '#F5F9F5' )
-        self.boton_nuevo.grid(row=12, column=0, padx=5, pady=5 )
+        self.boton_nuevo= tk.Button(self, text= "NUEVO", command= self.habilitar_campos)
+        self.boton_nuevo.config(width=20, font = ('Arial', 9,'bold'), bg= 'deep sky blue', cursor='hand2', activebackground= '#F5F9F5' )
+        self.boton_nuevo.grid(row=0, column=3, padx=5, pady=5 )
 
-        self.boton_guardar= tk.Button(self, text= "Guardar", command= self.guardar_datos)
-        self.boton_guardar.config(width=20, font= ('Arial', 12, 'bold'), fg= '#FFFFFF', bg='#688BD1', cursor='hand2', activebackground= '#F5F9F5' )
-        self.boton_guardar.grid(row=12, column=1, padx=5, pady=5)
+        self.boton_guardar= tk.Button(self, text= "GUARDAR", command= self.guardar_datos)
+        self.boton_guardar.config(width=20, font = ('Arial', 9,'bold'), bg= 'deep sky blue', cursor='hand2', activebackground= '#F5F9F5' )
+        self.boton_guardar.grid(row=1, column=3, padx=5, pady=5)
         #este es el boton guardar, que esta creado, pero no funciona 
-        # self.boton_buscar= tk.Button(self, text= "Buscar", command= self.buscar_datos)
-        # self.boton_buscar.config(width=20, font= ('Arial', 12, 'bold'), fg= '#FFFFFF', bg='#688BD1', cursor='hand2', activebackground= '#F5F9F5' )
-        # self.boton_buscar.grid(row=12, column=2, padx=5, pady=5)
+         
+        self.boton_exportar= tk.Button(self, text= "EXPORTAR EXCEL", command= self.exportar_datos)
+        self.boton_exportar.config(width=20, font = ('Arial', 9,'bold'), bg= 'deep sky blue', cursor='hand2', activebackground= '#F5F9F5' )
+        self.boton_exportar.grid(row=5, column=3, padx=5, pady=5)
 
-        self.boton_cancelar= tk.Button(self, text= "Cancelar", command=self.deshabilitar_campos)
-        self.boton_cancelar.config(width=20, font= ('Arial', 12, 'bold'), fg= '#FFFFFF', bg='#FA1007', cursor='hand2', activebackground= '#F5F9F5' )
-        self.boton_cancelar.grid(row=12, column=2, padx=5, pady=5)
+        self.boton_cancelar= tk.Button(self, text= "CANCELAR", command=self.deshabilitar_campos)
+        self.boton_cancelar.config(width=20, font = ('Arial', 9,'bold'), bg= 'deep sky blue', cursor='hand2', activebackground= '#F5F9F5' )
+        self.boton_cancelar.grid(row=2, column=3, padx=5, pady=5)
 
 
     def habilitar_campos(self):
@@ -349,16 +357,14 @@ class Frame(tk.Frame):
             self.tabla.insert('', 0, text= p[0],
             values=(p[1], p[2],p[3],p[4], p[5], p[6], p[7],p[8],p[9], p[10],p[11],p[12]))
 
-        self.boton_editar= tk.Button(self, text= "Editar", command= self.editar_datos)
-        self.boton_editar.config(width=20, font= ('Arial', 12, 'bold'),
-                                 fg= '#FFFFFF', bg='#688BD1', cursor='hand2', activebackground= '#F5F9F5' )
-        self.boton_editar.grid(row=12, column=3, padx=5, pady=5)
+        self.boton_editar= tk.Button(self, text= "EDITAR", command= self.editar_datos)
+        self.boton_editar.config(width=20, font = ('Arial', 9,'bold'), bg= 'deep sky blue', cursor='hand2', activebackground= '#F5F9F5' )
+        self.boton_editar.grid(row=3, column=3, padx=5, pady=5)
 
 
-        self.boton_eliminar= tk.Button(self, text= "Eliminar", command= self.eliminar_datos)
-        self.boton_eliminar.config(width=20, font= ('Arial', 12, 'bold'), fg= '#FFFFFF', 
-                                   bg='#FA1007', cursor='hand2', activebackground= '#F5F9F5' )
-        self.boton_eliminar.grid(row=11, column=3, padx=5, pady=5)
+        self.boton_eliminar= tk.Button(self, text= "ELIMINAR", command= self.eliminar_datos)
+        self.boton_eliminar.config(width=20, font = ('Arial', 9,'bold'), bg= 'deep sky blue', activebackground= '#F5F9F5' )
+        self.boton_eliminar.grid(row=4, column=3, padx=5, pady=5)
         #para agrgar otro boton incrementar column=4
 
     def editar_datos(self):
@@ -410,7 +416,31 @@ class Frame(tk.Frame):
             mensaje = 'No ha seleccionado ningun registro'
             messagebox.showerror(titulo, mensaje)
     
-            
-        # acá se deberia realizar la funcionalidad de botón buscar que se deberia poner el cuil del contratado y que te devuelva todo los campos 
-    # def buscar_datos(self):
-    #    pass
+    def exportar_datos(self):
+        lista_contratado = listar()
+        i = -1
+        mi_nombre,mi_cuil, mi_nacimiento,mi_monto, mi_modificacion,mi_duracion,mi_area_de_trabajo,mi_funcion, mi_domicilio, mi_telefono, mi_mail,mi_otros_trabajos= [],[],[],[],[],[],[],[],[],[],[],[]
+        for datos in lista_contratado:
+            i= i+1
+            mi_nombre.append(lista_contratado[i][1])
+            mi_cuil.append(lista_contratado[i][1])
+            mi_nacimiento.append(lista_contratado[i][1])
+            mi_monto.append(lista_contratado[i][1])
+            mi_modificacion.append(lista_contratado[i][1])
+            mi_duracion.append(lista_contratado[i][1])
+            mi_area_de_trabajo.append(lista_contratado[i][1])
+            mi_funcion.append(lista_contratado[i][1])
+            mi_domicilio.append(lista_contratado[i][1])
+            mi_telefono.append(lista_contratado[i][1])
+            mi_mail.append(lista_contratado[i][1])
+            mi_otros_trabajos.append(lista_contratado[i][1])
+        fecha = str(strftime('%d-%m-%y_%H-%M-%S'))
+        lista_contratado = {'Nombre':mi_nombre,'Cuil':mi_cuil, 'Fecha de Nacimiento':mi_nacimiento, 
+                    'Monto Inicial':mi_monto,'modificacion': mi_modificacion, 
+                    'Duración de la modificacion': mi_duracion,
+                    'Área de Trabajo': mi_area_de_trabajo, 'funcion': mi_funcion,'domicilio':mi_domicilio,
+                    'telefono':mi_telefono, 'mail':mi_mail, 'Otros Trabajos': mi_otros_trabajos}
+        df = pd.DataFrame(lista_contratado)
+        df.to_excel((f'lista_contratado {fecha}.xlsx'))
+        messagebox.showinfo('Informacion',  'lista_contratado guardados')
+      

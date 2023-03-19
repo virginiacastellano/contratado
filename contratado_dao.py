@@ -1,4 +1,3 @@
-
 from tkinter import  messagebox
 import sqlite3
 
@@ -157,9 +156,3 @@ def eliminar(id_contratado):
         titulo = 'Eliminar Datos'
         mensaje = 'No se pudo eliminar el registro'
         messagebox.showerror(titulo, mensaje)
-
-
-#acá comence a crear la funcionalidad de buscar en la tabla , pero no funciona 
-  
-# def buscar():
-#    pass
